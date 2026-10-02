@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } fr
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { site, categories } from "./src/data/site.mjs";
-import { homePage, categoryPage, gradedPage, aboutPage, contactPage, notFoundPage, redirectPage } from "./src/pages.mjs";
+import { homePage, categoryPage, gradedPage, deliveryPage, aboutPage, contactPage, notFoundPage, redirectPage } from "./src/pages.mjs";
 import { llmsTxt, llmsFullTxt } from "./src/llms.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -50,6 +50,7 @@ const pages = [
   ["/", homePage(images)],
   ...categories.map((c) => [`/${c.slug}/`, categoryPage(c, images)]),
   ["/graded-appliances/", gradedPage(images)],
+  ["/delivery/", deliveryPage(images)],
   ["/about/", aboutPage(images)],
   ["/contact/", contactPage()],
 ];
@@ -57,7 +58,14 @@ for (const [path, html] of pages) write(`${path}index.html`, html);
 write("404.html", notFoundPage());
 
 // Redirect stubs for renamed Wix URLs
-const redirects = categories.flatMap((c) => (c.oldPaths || []).map((p) => [p, `/${c.slug}/`]));
+const redirects = [
+  ...categories.flatMap((c) => (c.oldPaths || []).map((p) => [p, `/${c.slug}/`])),
+  // Other URLs from the old Wix sitemap (template/placeholder pages)
+  ["shipping-and-returns", "/delivery/"],
+  ["terms-and-conditions", "/contact/"],
+  ["help-center", "/"],
+  ["coming-soon-01", "/"],
+];
 for (const [from, to] of redirects) {
   write(`${from}/index.html`, redirectPage(to));
   write(`${from}.html`, redirectPage(to));

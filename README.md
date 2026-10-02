@@ -39,6 +39,24 @@ BASE_PATH=appliances2u ./deploy.sh   # preview at https://mcfearless75.github.io
 ./deploy.sh                          # production build for www.appliances2u.com (adds CNAME)
 ```
 
+## Switch-day checklist (planned 9 Oct 2026)
+
+Before (by 7 Oct):
+- [ ] Search Console → Settings → Ownership verification: make sure a **DNS TXT** method exists (a Wix HTML-tag verification dies with Wix)
+- [ ] Search Console → Pages: export the list of indexed URLs (to check redirects afterwards)
+- [ ] At the DNS host, lower the TTL on the `www` and apex records to 300 seconds
+- [ ] Note any **MX / email** records. Do not touch them.
+- [ ] If the domain is registered *through Wix*, keep it there (or transfer it) – only the plan for the website can be cancelled
+
+On the day (morning, weekday):
+1. `./deploy.sh` (production build, adds CNAME)
+2. Change DNS: `www` CNAME → `mcfearless75.github.io`; apex A records → 185.199.108–111.153
+3. GitHub → Settings → Pages: custom domain `www.appliances2u.com`; tick **Enforce HTTPS** once the certificate appears (can take up to an hour)
+4. Search Console: submit `/sitemap.xml`; URL Inspection on `/`, each category page and an old URL such as `/fridge-freeze`; request indexing
+5. Google Business Profile: confirm the website link is `https://www.appliances2u.com/`
+
+After: keep the Wix site plan for ~2 weeks as a fallback, then cancel.
+
 ## Going live on www.appliances2u.com
 
 1. At the domain registrar (DNS), replace the Wix records:

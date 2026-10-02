@@ -40,6 +40,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   ...categories.map((c) => ({ href: `/${c.slug}/`, label: c.nav })),
   { href: `/${gradedGuide.slug}/`, label: "Graded Guide" },
+  { href: "/delivery/", label: "Delivery" },
   { href: "/about/", label: "About" },
   { href: "/contact/", label: "Contact" },
 ];
@@ -93,7 +94,7 @@ function footer() {
     </section>
     <section>
       <h2>Shop</h2>
-      <ul class="links">${cats}<li><a href="/${gradedGuide.slug}/">What is graded?</a></li><li><a href="/about/">About us</a></li><li><a href="/contact/">Contact</a></li></ul>
+      <ul class="links">${cats}<li><a href="/${gradedGuide.slug}/">What is graded?</a></li><li><a href="/delivery/">Delivery &amp; fitting</a></li><li><a href="/about/">About us</a></li><li><a href="/contact/">Contact</a></li></ul>
     </section>
     <section>
       <h2>Payments</h2>

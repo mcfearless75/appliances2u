@@ -194,6 +194,10 @@ address { font-style: normal; }
 .steps p { color: var(--muted); margin: 0; }
 .step-n { display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 14px; border-radius: 50%; background: var(--navy); color: #fff; font-family: var(--display); font-weight: 800; font-size: 1.2rem; }
 @media (max-width: 800px) { .steps { grid-template-columns: 1fr; } }
+.steps-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1000px) { .steps-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .steps-4 { grid-template-columns: 1fr; } }
+.pill { display: inline-block; padding: 6px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-weight: 600; font-size: .9rem; }
 
 /* Brands marquee */
 .brands { padding: 48px 0 40px; border-block: 1px solid var(--line); text-align: center; }

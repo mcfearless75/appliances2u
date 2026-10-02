@@ -292,6 +292,78 @@ ${callStrip("Want to see graded stock in person?")}`;
   });
 }
 
+export function deliveryPage(images) {
+  const trail = [home, { name: "Delivery & Fitting", path: "/delivery/" }];
+  const deliveryFaqs = faqs.filter((f) => /deliver|install/i.test(f.q));
+  const steps = [
+    ["Call us", `Ring ${site.phones[0].display} to choose your appliance, or pick one in store.`],
+    ["Agree a time & price", "We confirm the delivery cost and a day that suits you."],
+    ["We deliver & fit", "We bring it to your home and install it, ready to use."],
+    ["Old one taken away", "We can remove your old appliance at the same time."],
+  ];
+  const body = `
+<section class="page-hero">
+  ${crumbs(trail)}
+  <div class="wrap page-hero-grid">
+    <div>
+      <span class="page-ico">${icon("truck", 34)}</span>
+      <h1>Appliance Delivery, Fitting &amp; Removal in Liverpool</h1>
+      <p>Bought a washing machine, fridge freezer, cooker or dryer from us? We can deliver it to your door across Bootle, Liverpool and Sefton, install it and take your old appliance away.</p>
+      <p class="actions">${callBtn("Call to arrange delivery")}</p>
+    </div>
+    ${img(images, "site/van-bootle", "Appliances 2 U delivery van in Bootle, Liverpool", { eager: true, sizes: "(min-width: 900px) 35vw, 100vw", cls: "page-hero-img" })}
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">How it works</p>
+    <h2>Four simple steps</h2>
+    <ol class="steps steps-4">${steps.map(([t, d], i) => `<li class="reveal" style="--i:${i}"><span class="step-n">${i + 1}</span><h3>${t}</h3><p>${d}</p></li>`).join("")}</ol>
+  </div>
+</section>
+<section class="section tips">
+  <div class="wrap split">
+    <div>
+      <h2>Where we deliver</h2>
+      <p>We deliver locally from our Bootle store, including:</p>
+      <ul class="pill-links">${site.areas.map((a) => `<li><span class="pill">${a}</span></li>`).join("")}</ul>
+      <p class="muted">Not sure if we cover your area? Give us a call and ask.</p>
+    </div>
+    <div class="panel">
+      <h2>Good to know</h2>
+      <ul class="ticks">
+        <li>Delivery prices are confirmed when you call</li>
+        <li>Installation for washing machines, dryers, fridge freezers and electric appliances</li>
+        <li>Gas cookers and hobs must be connected by a Gas Safe registered engineer</li>
+        <li>Old appliance removal available</li>
+      </ul>
+    </div>
+  </div>
+</section>
+${faqBlock(deliveryFaqs, "Delivery questions")}
+${callStrip("Ready to book a delivery?")}`;
+  return layout({
+    path: "/delivery/",
+    title: "Appliance Delivery & Fitting Liverpool | A2U Bootle",
+    description:
+      "Local appliance delivery, installation and old appliance removal across Bootle, Liverpool and Sefton from Appliances 2 U. Call 07769 865432 to arrange delivery.",
+    body,
+    breadcrumb: trail,
+    ld: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        name: "Appliance delivery, installation and removal",
+        serviceType: "Home appliance delivery and installation",
+        provider: { "@id": `${site.url}/#store` },
+        areaServed: site.areas.map((name) => ({ "@type": "Place", name })),
+        url: `${site.url}/delivery/`,
+      },
+      faqLd(deliveryFaqs),
+    ],
+  });
+}
+
 export function aboutPage(images) {
   const trail = [home, { name: "About", path: "/about/" }];
   const body = `

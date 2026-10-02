@@ -24,6 +24,7 @@ ${hours.replace(/^/gm, "  ")}
 - [Home](${site.url}/): overview, range and FAQs
 ${categories.map((c) => `- [${c.nav}](${site.url}/${c.slug}/): ${c.description}`).join("\n")}
 - [${gradedGuide.h1}](${site.url}/${gradedGuide.slug}/): ${gradedGuide.description}
+- [Delivery & fitting](${site.url}/delivery/): local delivery, installation and old appliance removal
 - [About](${site.url}/about/): who we are
 - [Contact](${site.url}/contact/): phone, hours, map and directions
 
