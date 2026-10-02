@@ -1,0 +1,396 @@
+{
+  "galleries": {
+    "washing-machines": [
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-01.webp",
+        "w": 1200,
+        "h": 900
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-02.webp",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-03.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-04.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-05.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-06.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-07.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-08.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-09.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-10.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-11.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-12.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-13.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-14.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-15.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/washing-machines/washing-machines-liverpool-16.webp",
+        "w": 1200,
+        "h": 1600
+      }
+    ],
+    "cookers": [
+      {
+        "src": "assets/img/cookers/cookers-liverpool-01.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-02.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-03.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-04.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-05.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-06.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-07.webp",
+        "w": 1152,
+        "h": 2048
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-08.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-09.webp",
+        "w": 1200,
+        "h": 900
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-10.webp",
+        "w": 1200,
+        "h": 900
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-11.webp",
+        "w": 1200,
+        "h": 900
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-12.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/cookers/cookers-liverpool-13.webp",
+        "w": 1200,
+        "h": 900
+      }
+    ],
+    "fridge-freezers": [
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-01.webp",
+        "w": 1200,
+        "h": 900
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-02.webp",
+        "w": 1200,
+        "h": 900
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-03.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-04.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-05.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-06.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-07.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-08.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-09.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-10.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-11.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-12.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-13.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-14.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/fridge-freezers/fridge-freezers-liverpool-15.webp",
+        "w": 1200,
+        "h": 1600
+      }
+    ],
+    "tumble-dryers": [
+      {
+        "src": "assets/img/tumble-dryers/tumble-dryers-liverpool-01.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/tumble-dryers/tumble-dryers-liverpool-02.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/tumble-dryers/tumble-dryers-liverpool-03.webp",
+        "w": 900,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/tumble-dryers/tumble-dryers-liverpool-04.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/tumble-dryers/tumble-dryers-liverpool-05.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/tumble-dryers/tumble-dryers-liverpool-06.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/tumble-dryers/tumble-dryers-liverpool-07.webp",
+        "w": 1200,
+        "h": 1600
+      }
+    ],
+    "integrated": [
+      {
+        "src": "assets/img/integrated/integrated-liverpool-01.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-02.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-03.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-04.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-05.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-06.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-07.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-08.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-09.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-10.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-11.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-12.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-13.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-14.webp",
+        "w": 1200,
+        "h": 1600
+      },
+      {
+        "src": "assets/img/integrated/integrated-liverpool-15.webp",
+        "w": 1200,
+        "h": 1600
+      }
+    ]
+  },
+  "singles": {
+    "brand/logo": {
+      "src": "assets/img/brand/logo.png",
+      "w": 1200,
+      "h": 1196
+    },
+    "brand/call-badge": {
+      "src": "assets/img/brand/call-badge.png",
+      "w": 512,
+      "h": 512
+    },
+    "site/van-bootle": {
+      "src": "assets/img/site/van-bootle.webp",
+      "w": 1200,
+      "h": 900
+    },
+    "site/shop-front-bootle": {
+      "src": "assets/img/site/shop-front-bootle.webp",
+      "w": 1200,
+      "h": 1600
+    },
+    "brands/candy": {
+      "src": "assets/img/brands/candy.webp",
+      "w": 1200,
+      "h": 246
+    },
+    "brands/hoover": {
+      "src": "assets/img/brands/hoover.webp",
+      "w": 1200,
+      "h": 1140
+    },
+    "brands/beko": {
+      "src": "assets/img/brands/beko.webp",
+      "w": 1200,
+      "h": 684
+    },
+    "brands/samsung": {
+      "src": "assets/img/brands/samsung.webp",
+      "w": 1200,
+      "h": 398
+    },
+    "brand/visa": {
+      "src": "assets/img/brand/visa.png",
+      "w": 176,
+      "h": 112
+    },
+    "brand/mastercard": {
+      "src": "assets/img/brand/mastercard.png",
+      "w": 132,
+      "h": 84
+    }
+  }
+}
