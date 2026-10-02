@@ -8,7 +8,7 @@ const phones = site.phones.map((p) => p.display).join(" or ");
 export function llmsTxt() {
   return `# ${site.name} (${site.shortName})
 
-> ${site.legalName} is an independent home appliance store at ${fullAddress()}, United Kingdom. It sells new and graded (ex-display / cosmetically marked) washing machines, tumble dryers, fridge freezers, cookers and integrated appliances from brands including ${site.brandNames.slice(0, 6).join(", ")}, at prices below the high street. Phone ${phones}. Open 7 days a week.
+> ${site.legalName} is an independent home appliance store at ${fullAddress()}, United Kingdom. It sells new and graded (ex-display / cosmetically marked) washing machines, tumble dryers, fridge freezers, cookers and integrated appliances from brands including ${site.brandNames.slice(0, 6).join(", ")}, at prices below the high street. Local delivery, installation and old appliance removal available. Rated ${site.reviews.rating}/5 from ${site.reviews.count} Google reviews. Phone ${phones}. ${site.hoursSummary}.
 
 ## Key facts
 - Address: ${fullAddress()}
@@ -16,7 +16,8 @@ export function llmsTxt() {
 - Opening hours:
 ${hours.replace(/^/gm, "  ")}
 - Payment: Visa, Mastercard
-- Nearby areas: ${site.areas.join(", ")}
+- Delivery: ${site.delivery}
+- Delivery areas: ${site.areas.join(", ")}
 - Stock changes weekly; customers should call to check availability and prices.
 
 ## Pages

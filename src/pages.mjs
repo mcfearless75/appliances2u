@@ -15,7 +15,8 @@ export function quickFacts() {
     ["Sells", "New and graded washing machines, tumble dryers, fridge freezers, cookers, hobs and integrated appliances"],
     ["Brands", `${site.brandNames.join(", ")} and more`],
     ["Payment", "Visa and Mastercard"],
-    ["Nearby areas", site.areas.join(", ")],
+    ["Google rating", `${site.reviews.rating} out of 5 from ${site.reviews.count} reviews`],
+    ["Delivery & fitting", `Local delivery, installation and old appliance removal. Areas include ${site.areas.join(", ")}. Call for a price.`],
   ];
   return `<section class="section facts" aria-labelledby="facts-h">
   <div class="wrap narrow reveal">
@@ -25,10 +26,29 @@ export function quickFacts() {
 </section>`;
 }
 
+const stars = `<span class="stars" aria-hidden="true">${'<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 17.3l-5.9 3.2 1.3-6.5L2.5 9.4l6.6-.8z"/></svg>'.repeat(5)}</span>`;
+
+export const ratingBadge = (cls = "") =>
+  `<a class="rating ${cls}" href="${site.reviews.url}" rel="noopener" target="_blank">${stars}<span><strong>${site.reviews.rating}</strong> from ${site.reviews.count} Google reviews</span></a>`;
+
+function reviewsBlock() {
+  return `<section class="section reviews" aria-labelledby="reviews-h">
+  <div class="wrap">
+    <p class="kicker">Customer reviews</p>
+    <h2 id="reviews-h">Rated ${site.reviews.rating} on Google</h2>
+    ${ratingBadge("rating-dark")}
+    <ul class="quotes">${site.reviews.quotes
+      .map((q, i) => `<li class="reveal" style="--i:${i}"><blockquote><p>“${esc(q)}”</p><footer>${stars} Google review</footer></blockquote></li>`)
+      .join("")}</ul>
+    <p><a class="btn btn-ghost" href="${site.reviews.url}" rel="noopener" target="_blank">Read all reviews on Google ${icon("arrow", 16)}</a></p>
+  </div>
+</section>`;
+}
+
 const trustItems = [
   ["tag", "Up to 70% off RRP", "on selected graded stock*"],
-  ["truck", "New stock weekly", "fresh deliveries all the time"],
-  ["clock", "Open 7 days", "late opening weekdays"],
+  ["truck", "Delivery & fitting", "plus old appliance removal"],
+  ["clock", "Open Mon – Sat", "10am – 4:30pm"],
   ["shield", "Top brands", "Samsung, Bosch, Beko & more"],
 ];
 
@@ -60,8 +80,9 @@ export function homePage(images) {
     <div class="hero-copy">
       <p class="eyebrow">${icon("pin", 16)}Strand Road · Bootle · Liverpool</p>
       <h1><span class="display">Big brands.<br><em>Small prices.</em></span> New &amp; graded appliances in Liverpool</h1>
-      <p class="lead">Washing machines, tumble dryers, fridge freezers, cookers and integrated appliances from top brands, for a lot less than the high street.</p>
+      <p class="lead">Washing machines, tumble dryers, fridge freezers, cookers and integrated appliances from top brands, for a lot less than the high street. Delivery, fitting and old appliance removal available.</p>
       <p class="actions">${callBtn()}<a class="btn btn-outline-light" href="#range">Browse the range</a></p>
+      ${ratingBadge()}
     </div>
     <div class="hero-media">
       ${img(images, "site/shop-front-bootle", "Appliances 2 U shop front on Strand Road, Bootle", { eager: true, sizes: "(min-width: 900px) 40vw, 100vw" })}
@@ -103,7 +124,7 @@ export function homePage(images) {
       <p>From kitchen essentials to premium appliances, we make buying easy, affordable and hassle-free, serving Bootle, Liverpool and the wider Merseyside community.</p>
       <p class="actions"><a class="btn btn-ghost" href="/about/">More about us</a></p>
     </div>
-    ${img(images, "site/van-bootle", "Appliances 2 U van in Bootle, Liverpool", { sizes: "(min-width: 900px) 45vw, 100vw", cls: "rounded reveal" })}
+    ${img(images, "site/van-bootle", "Appliances 2 U delivery van in Bootle, Liverpool", { sizes: "(min-width: 900px) 45vw, 100vw", cls: "rounded reveal" })}
   </div>
 </section>
 
@@ -115,6 +136,7 @@ export function homePage(images) {
   <p class="wrap muted center">Including ${site.brandNames.join(", ")} and more, subject to availability.</p>
 </section>
 
+${reviewsBlock()}
 ${quickFacts()}
 ${faqBlock()}
 ${callStrip()}
@@ -124,7 +146,7 @@ ${callStrip()}
     path: "/",
     title: "Appliances 2 U | New & Graded Appliances Bootle, Liverpool",
     description:
-      "Liverpool's local store for new and graded washing machines, fridge freezers, cookers and tumble dryers at low prices. Visit us at 203 Strand Road, Bootle L20 3HJ.",
+      "Liverpool's local store for new and graded washing machines, fridge freezers, cookers and tumble dryers at low prices, with local delivery. Visit us at 203 Strand Road, Bootle L20 3HJ.",
     body,
     ld: [
       localBusinessLd(),
@@ -168,6 +190,7 @@ export function categoryPage(c, images) {
       <h1>${c.h1}</h1>
       ${c.intro.map((p) => `<p>${p}</p>`).join("\n      ")}
       <p class="actions">${callBtn(`Call ${site.phones[0].display} to check stock`)}</p>
+      <p class="delivery-note">${icon("truck", 20)}Local delivery, fitting &amp; old appliance removal</p>
     </div>
     ${img(images, c.hero, `${c.nav} at Appliances 2 U, Bootle`, { eager: true, sizes: "(min-width: 900px) 35vw, 100vw", cls: "page-hero-img" })}
   </div>
@@ -284,7 +307,8 @@ export function aboutPage(images) {
         <li>New and graded stock from leading brands</li>
         <li>Prices well below the high street</li>
         <li>New stock coming in all the time</li>
-        <li>Local, independent and open 7 days a week</li>
+        <li>Local delivery, installation and old appliance removal</li>
+        <li>Local, independent and rated ${site.reviews.rating} on Google</li>
       </ul>
     </div>
     ${img(images, "site/shop-front-bootle", "Appliances 2 U shop front, 203 Strand Road, Bootle", { eager: true, sizes: "(min-width: 900px) 40vw, 100vw", cls: "rounded" })}
@@ -326,6 +350,8 @@ export function contactPage() {
       <address>${site.legalName}<br>${esc(fullAddress())}</address>
       <h2>Finding us</h2>
       <p>On Strand Road in Bootle, easy to reach from ${site.areas.slice(1, -1).join(", ")} and ${site.areas.at(-1)}.</p>
+      <h2>Delivery</h2>
+      <p>${site.delivery}</p>
     </div>
     ${mapBlock()}
   </div>
@@ -334,7 +360,7 @@ export function contactPage() {
     path: "/contact/",
     title: "Contact Us | Appliances 2 U, 203 Strand Road, Bootle L20 3HJ",
     description:
-      "Contact Appliances 2 U in Bootle, Liverpool. Call 07769 865432 or 07752 241831, or visit us at 203 Strand Road, L20 3HJ. Open 7 days a week.",
+      "Contact Appliances 2 U in Bootle, Liverpool. Call 07769 865432 or 07752 241831, or visit us at 203 Strand Road, L20 3HJ. Open Monday to Saturday, 10am–4:30pm.",
     body,
     breadcrumb: trail,
     ld: [localBusinessLd(), { "@context": "https://schema.org", "@type": "ContactPage", url: `${site.url}/contact/`, about: { "@id": `${site.url}/#store` } }],

@@ -38,13 +38,19 @@
         text.textContent = `Closed · opens ${fmt(today.opens)} today`;
       } else {
         const order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        const next = order[(order.indexOf(parts.weekday) + 1) % 7];
-        const tomorrow = hours.find((h) => h.days.includes(next));
         status.classList.add("is-closed");
-        text.textContent = tomorrow ? `Closed · opens ${fmt(tomorrow.opens)} tomorrow` : "Closed now";
+        text.textContent = "Closed now";
+        for (let i = 1; i <= 7; i++) {
+          const day = order[(order.indexOf(parts.weekday) + i) % 7];
+          const next = hours.find((h) => h.days.includes(day));
+          if (next) {
+            text.textContent = `Closed · opens ${fmt(next.opens)} ${i === 1 ? "tomorrow" : day}`;
+            break;
+          }
+        }
       }
     } catch {
-      /* keep the static "Open 7 days a week" text */
+      /* keep the static opening-hours text */
     }
   }
 

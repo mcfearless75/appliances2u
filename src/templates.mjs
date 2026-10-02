@@ -45,7 +45,8 @@ const navLinks = [
 ];
 
 // Opening hours for the live open/closed badge (read by site.js).
-const hoursJson = esc(JSON.stringify(site.hours.map(({ days, opens, closes }) => ({ days, opens, closes }))));
+const openHours = site.hours.filter((h) => !h.closed);
+const hoursJson = esc(JSON.stringify(openHours.map(({ days, opens, closes }) => ({ days, opens, closes }))));
 
 function header(path) {
   const items = navLinks
@@ -54,7 +55,7 @@ function header(path) {
   return `<a class="skip" href="#main">Skip to main content</a>
 <div class="topbar">
   <div class="wrap topbar-inner">
-    <span class="status" data-hours="${hoursJson}">${icon("clock", 16)}<span class="status-text">Open 7 days a week</span></span>
+    <span class="status" data-hours="${hoursJson}">${icon("clock", 16)}<span class="status-text">${site.hoursSummary}</span></span>
     <a class="topbar-addr" href="${directionsUrl}" rel="noopener" target="_blank">${icon("pin", 16)}${esc(site.address.street)}, ${esc(site.address.locality)} ${esc(site.address.postcode)}</a>
   </div>
 </div>
@@ -101,7 +102,7 @@ function footer() {
         <img src="/assets/img/brand/mastercard.png" alt="Mastercard" width="56" height="36" loading="lazy">
       </p>
       <p>${site.social.map((s) => `<a href="${s.url}" rel="noopener" target="_blank">Follow us on ${s.name}</a>`).join("")}</p>
-      <p class="areas">Serving ${site.areas.slice(0, -1).join(", ")} and ${site.areas.at(-1)}.</p>
+      <p class="areas">Local delivery to ${site.areas.slice(0, -1).join(", ")} and ${site.areas.at(-1)}.</p>
     </section>
   </div>
   <p class="wrap legal">© ${year} ${site.legalName}. All rights reserved.</p>
@@ -125,7 +126,7 @@ export function localBusinessLd() {
     logo: `${site.url}/assets/img/brand/icon-512.png`,
     image: [`${site.url}/assets/img/site/shop-front-bootle.webp`, `${site.url}/assets/img/site/og-card.jpg`, `${site.url}/assets/img/site/van-bootle.webp`],
     description:
-      "Independent appliance store in Bootle, Liverpool selling new and graded washing machines, tumble dryers, fridge freezers, cookers and integrated appliances at prices below the high street.",
+      "Independent appliance store in Bootle, Liverpool selling new and graded washing machines, tumble dryers, fridge freezers, cookers and integrated appliances at prices below the high street, with local delivery across Liverpool and Sefton.",
     slogan: "Quality new and graded appliances at unbeatable prices",
     telephone: site.phones[0].e164,
     contactPoint: site.phones.map((p) => ({ "@type": "ContactPoint", telephone: p.e164, contactType: "sales", areaServed: "GB", availableLanguage: "en-GB" })),
@@ -133,7 +134,7 @@ export function localBusinessLd() {
     geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
     hasMap: `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`,
     areaServed: site.areas.map((name) => ({ "@type": "Place", name })),
-    openingHoursSpecification: site.hours.map((h) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.days, opens: h.opens, closes: h.closes })),
+    openingHoursSpecification: openHours.map((h) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.days, opens: h.opens, closes: h.closes })),
     paymentAccepted: "Visa, Mastercard",
     currenciesAccepted: "GBP",
     brand: site.brandNames.map((name) => ({ "@type": "Brand", name })),
@@ -239,7 +240,7 @@ export function callStrip(heading = "Seen something you like?") {
   <div class="wrap call-strip-inner reveal">
     <div>
       <h2>${heading}</h2>
-      <p>Stock moves fast. Call us to check availability or reserve an appliance.</p>
+      <p>Stock moves fast. Call us to check availability, reserve an appliance or arrange local delivery.</p>
     </div>
     <p class="actions">${site.phones.map((p) => `<a class="btn btn-call" href="tel:${p.e164}">${icon("phone", 18)}${p.display}</a>`).join("")}
       <a class="btn btn-outline-light" href="${directionsUrl}" rel="noopener" target="_blank">${icon("pin", 18)}Directions</a></p>

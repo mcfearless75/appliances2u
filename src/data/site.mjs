@@ -21,13 +21,26 @@ export const site = {
   },
   // Days use schema.org names; times are 24h local.
   hours: [
-    { label: "Monday – Friday", days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "19:00", text: "9am – 7pm" },
-    { label: "Saturday", days: ["Saturday"], opens: "10:00", closes: "18:00", text: "10am – 6pm" },
-    { label: "Sunday", days: ["Sunday"], opens: "10:00", closes: "19:00", text: "10am – 7pm" },
+    // Matches the Google Business Profile (checked 2026-10-02). Keep both in sync.
+    { label: "Monday – Saturday", days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "10:00", closes: "16:30", text: "10am – 4:30pm" },
+    { label: "Sunday", days: ["Sunday"], closed: true, text: "Closed" },
   ],
   // Postcode centroid for L20 3HJ (postcodes.io)
   geo: { lat: 53.452792, lng: -2.989356 },
-  // Nearby areas for local relevance. Describes reach, not a delivery promise.
+  // Local delivery is offered; price and exact coverage are confirmed by phone.
+  hoursSummary: "Open Monday to Saturday, 10am – 4:30pm",
+  delivery: "Local delivery, installation and old appliance removal available across Bootle, Liverpool and nearby areas. Ask for a price when you call.",
+  // Google Business Profile. Update the count now and then.
+  reviews: {
+    rating: "5.0",
+    count: 33,
+    url: "https://share.google/PZ7TL3aJembp4Q0IP",
+    quotes: [
+      "Staff very helpful boss also helpful and they went extra mile with delivery.",
+      "Excellent service and great price will be back.",
+      "I have just had a new washing machine fitted by Jay.",
+    ],
+  },
   areas: ["Bootle", "Litherland", "Seaforth", "Orrell", "Netherton", "Kirkdale", "Walton", "Waterloo", "Crosby", "Aintree", "Everton", "Anfield", "Liverpool city centre"],
   social: [{ name: "TikTok", url: "https://www.tiktok.com/@jay.j183" }],
   brands: ["candy", "hoover", "beko", "samsung"],
@@ -199,6 +212,18 @@ export const faqs = [
   {
     q: "How can I check what is in stock?",
     a: `Stock changes all the time, so the quickest way is to call us on ${site.phones[0].display} or ${site.phones[1].display}, or visit the store during opening hours.`,
+  },
+  {
+    q: "Do you deliver?",
+    a: "Yes. We offer local delivery across Bootle, Liverpool and surrounding areas including Litherland, Crosby, Walton and Netherton. Call 07769 865432 to arrange delivery and get a price.",
+  },
+  {
+    q: "Can you install my new appliance and take the old one away?",
+    a: "Yes. We can install washing machines, dryers, fridge freezers and electric appliances on delivery and take your old appliance away. Gas cookers and hobs must be connected by a Gas Safe registered engineer.",
+  },
+  {
+    q: "What are your opening hours?",
+    a: "We are open Monday to Saturday, 10am to 4:30pm, and closed on Sundays.",
   },
   {
     q: "How can I pay?",

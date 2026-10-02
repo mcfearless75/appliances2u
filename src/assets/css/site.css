@@ -141,6 +141,20 @@ address { font-style: normal; }
   .sticker strong { font-size: 2rem; }
 }
 
+.rating { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); color: #fff; text-decoration: none; font-size: .95rem; }
+.rating:hover { background: rgba(255,255,255,.18); color: #fff; }
+.stars { display: inline-flex; color: #fbbf24; }
+.rating-dark { background: var(--navy); border-color: var(--navy); margin: 0 0 8px; }
+.rating-dark:hover { background: var(--navy-deep); }
+
+/* Reviews */
+.reviews { background: var(--bg-alt); }
+.quotes { list-style: none; padding: 0; margin: 24px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.quotes blockquote { margin: 0; height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding: 26px; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); }
+.quotes p { margin: 0; font-family: var(--display); font-weight: 500; font-size: 1.15rem; color: var(--navy-deep); line-height: 1.4; }
+.quotes footer { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .85rem; }
+@media (max-width: 800px) { .quotes { grid-template-columns: 1fr; } }
+
 /* Trust bar */
 .trust { position: relative; z-index: 2; margin-top: -44px; }
 .trust-grid { list-style: none; padding: 18px; margin-inline: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
@@ -220,6 +234,8 @@ address { font-style: normal; }
 .page-hero-img { border-radius: var(--radius); box-shadow: var(--shadow-lg); aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
 .page-ico { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 18px; background: var(--navy); color: #fff; margin-bottom: 18px; box-shadow: 0 10px 24px rgba(14,17,87,.3); }
 @media (max-width: 860px) { .page-hero-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+.delivery-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font-weight: 600; color: var(--navy); }
 
 /* Tips */
 .tips { padding-top: 24px; }
