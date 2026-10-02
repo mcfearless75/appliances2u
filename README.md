@@ -27,13 +27,21 @@ To add gallery photos, either drop WebP files into `src/assets/img/<category>/` 
 - WebP images with explicit width/height, responsive `srcset`, lazy loading. No JS framework, so pages load fast.
 - Old Wix URLs keep working: `/washing-machines`, `/tumble-dryers`, `/integrated`, `/about`, `/contact` are unchanged; `/copy-of-washing-machines` redirects to `/cookers/` and `/fridge-freeze` to `/fridge-freezers/`
 
-## Going live (GitHub Pages)
+## Deploying (GitHub Pages)
 
-1. Push this repo to GitHub (branch `main`).
-2. Repo **Settings → Pages → Source: GitHub Actions**.
-3. **Settings → Pages → Custom domain:** `www.appliances2u.com`, then tick **Enforce HTTPS** once the certificate is issued.
-4. At the domain registrar (DNS), replace the Wix records:
-   - `www` → `CNAME` → `<your-github-username>.github.io`
+Pages serves the `gh-pages` branch. `deploy.sh` builds and force-pushes `dist/` to it. Commit source changes to `main` as normal.
+
+```bash
+BASE_PATH=appliances2u ./deploy.sh   # preview at https://mcfearless75.github.io/appliances2u/
+./deploy.sh                          # production build for www.appliances2u.com (adds CNAME)
+```
+
+## Going live on www.appliances2u.com
+
+1. At the domain registrar (DNS), replace the Wix records:
+   - `www` → `CNAME` → `mcfearless75.github.io`
    - apex `appliances2u.com` → `A` records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-5. In Google Search Console, submit `https://www.appliances2u.com/sitemap.xml` and check the old URLs with URL Inspection.
-6. Cancel the Wix premium plan only after the new site is live and verified.
+2. Run `./deploy.sh` (no `BASE_PATH`) so the build contains the `CNAME` file.
+3. Repo **Settings → Pages**: confirm the custom domain shows `www.appliances2u.com`, then tick **Enforce HTTPS** once the certificate is issued.
+4. In Google Search Console, submit `https://www.appliances2u.com/sitemap.xml` and check the old URLs with URL Inspection.
+5. Cancel the Wix premium plan only after the new site is live and verified.
