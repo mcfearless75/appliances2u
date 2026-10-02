@@ -1,6 +1,6 @@
 # Appliances 2 U website
 
-Static rebuild of www.appliances2u.com (moved off Wix). No framework and no npm dependencies: a small Node script turns `src/` into plain HTML in `dist/`, and GitHub Actions publishes that to GitHub Pages.
+Static rebuild of www.appliances2u.com (moved off Wix). No framework and no npm dependencies: a small Node script turns `src/` into plain HTML in `dist/`, and `deploy.sh` publishes that to GitHub Pages.
 
 ## Editing
 
