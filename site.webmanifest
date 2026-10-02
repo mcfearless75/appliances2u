@@ -1,0 +1,20 @@
+{
+  "name": "Appliances 2 U",
+  "short_name": "A2U",
+  "start_url": "/appliances2u/",
+  "display": "browser",
+  "theme_color": "#1b1f8a",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/appliances2u/assets/img/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/appliances2u/assets/img/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
