@@ -1,5 +1,8 @@
-// Mobile nav toggle + gallery lightbox. Site works fully without JS.
+// Progressive enhancements: nav toggle, open/closed badge, scroll reveal, gallery lightbox.
+// The site works fully without JS.
 (() => {
+  document.documentElement.classList.add("js");
+
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("site-nav");
   if (toggle && nav) {
@@ -8,6 +11,52 @@
       toggle.setAttribute("aria-expanded", String(!open));
       nav.classList.toggle("open", !open);
     });
+  }
+
+  // Live "Open now" badge, evaluated in UK time regardless of visitor's timezone.
+  const status = document.querySelector(".status[data-hours]");
+  if (status) {
+    try {
+      const hours = JSON.parse(status.dataset.hours);
+      const parts = Object.fromEntries(
+        new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", weekday: "long", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+          .formatToParts(new Date())
+          .map((p) => [p.type, p.value]),
+      );
+      const now = `${parts.hour}:${parts.minute}`;
+      const fmt = (t) => {
+        const [h, m] = t.split(":").map(Number);
+        return `${h % 12 || 12}${m ? `:${String(m).padStart(2, "0")}` : ""}${h < 12 ? "am" : "pm"}`;
+      };
+      const today = hours.find((h) => h.days.includes(parts.weekday));
+      const text = status.querySelector(".status-text");
+      if (today && now >= today.opens && now < today.closes) {
+        status.classList.add("is-open");
+        text.textContent = `Open now · until ${fmt(today.closes)} today`;
+      } else if (today && now < today.opens) {
+        status.classList.add("is-closed");
+        text.textContent = `Closed · opens ${fmt(today.opens)} today`;
+      } else {
+        const order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const next = order[(order.indexOf(parts.weekday) + 1) % 7];
+        const tomorrow = hours.find((h) => h.days.includes(next));
+        status.classList.add("is-closed");
+        text.textContent = tomorrow ? `Closed · opens ${fmt(tomorrow.opens)} tomorrow` : "Closed now";
+      }
+    } catch {
+      /* keep the static "Open 7 days a week" text */
+    }
+  }
+
+  const reveals = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && reveals.length) {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    reveals.forEach((el) => io.observe(el));
+  } else {
+    reveals.forEach((el) => el.classList.add("in"));
   }
 
   const links = document.querySelectorAll("a.zoom");

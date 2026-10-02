@@ -3,7 +3,8 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } fr
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { site, categories } from "./src/data/site.mjs";
-import { homePage, categoryPage, aboutPage, contactPage, notFoundPage, redirectPage } from "./src/pages.mjs";
+import { homePage, categoryPage, gradedPage, aboutPage, contactPage, notFoundPage, redirectPage } from "./src/pages.mjs";
+import { llmsTxt, llmsFullTxt } from "./src/llms.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const src = join(root, "src");
@@ -48,6 +49,7 @@ cpSync(join(src, "assets"), join(out, "assets"), { recursive: true });
 const pages = [
   ["/", homePage(images)],
   ...categories.map((c) => [`/${c.slug}/`, categoryPage(c, images)]),
+  ["/graded-appliances/", gradedPage(images)],
   ["/about/", aboutPage(images)],
   ["/contact/", contactPage()],
 ];
@@ -62,15 +64,29 @@ for (const [from, to] of redirects) {
 }
 
 const today = new Date().toISOString().slice(0, 10);
+// Sitemap with image entries (helps Google Images / local pack pick up stock photos)
+const sitemapUrl = ([p, html]) => {
+  const imgs = [...new Set([...html.matchAll(/<img src="\/(assets\/img\/[^"]+\.(?:webp|jpg))"/g)].map((m) => m[1]))];
+  const imageTags = imgs.map((i) => `\n    <image:image><image:loc>${site.url}/${i}</image:loc></image:image>`).join("");
+  return `  <url><loc>${site.url}${p}</loc><lastmod>${today}</lastmod>${imageTags}\n  </url>`;
+};
 write(
   "sitemap.xml",
   `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(([p]) => `  <url><loc>${site.url}${p}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${pages.map(sitemapUrl).join("\n")}
 </urlset>
 `,
 );
-write("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
+
+// Search engines and AI answer engines are all explicitly welcome.
+const aiBots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot", "Perplexity-User", "Google-Extended", "Applebot-Extended", "Bingbot", "DuckAssistBot", "Amazonbot", "CCBot", "meta-externalagent", "MistralAI-User"];
+write(
+  "robots.txt",
+  `User-agent: *\nAllow: /\n\n${aiBots.map((b) => `User-agent: ${b}`).join("\n")}\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`,
+);
+write("llms.txt", llmsTxt());
+write("llms-full.txt", llmsFullTxt());
 if (!BASE) write("CNAME", `${new URL(site.url).host}\n`);
 write(".nojekyll", "");
 write(

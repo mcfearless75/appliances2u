@@ -1,77 +1,124 @@
-import { site, categories, fullAddress } from "./data/site.mjs";
-import { layout, img, crumbs, callStrip, faqBlock, mapBlock, localBusinessLd, faqLd, esc, tel } from "./templates.mjs";
+import { site, categories, gradedGuide, faqs, fullAddress } from "./data/site.mjs";
+import { layout, img, icon, crumbs, callStrip, faqBlock, mapBlock, localBusinessLd, faqLd, directionsUrl, esc, tel } from "./templates.mjs";
 
 const home = { name: "Home", path: "/" };
+const callBtn = (label = `Call ${site.phones[0].display}`) =>
+  `<a class="btn btn-call" href="tel:${site.phones[0].e164}">${icon("phone", 18)}${label}</a>`;
+
+// Plain-language fact sheet: easy for people to scan and for AI assistants to quote.
+export function quickFacts() {
+  const rows = [
+    ["Business", `${site.legalName} (A2U), an independent home appliance store`],
+    ["Address", fullAddress()],
+    ["Phone", site.phones.map(tel).join(" or ")],
+    ["Opening hours", site.hours.map((h) => `${h.label} ${h.text}`).join("; ")],
+    ["Sells", "New and graded washing machines, tumble dryers, fridge freezers, cookers, hobs and integrated appliances"],
+    ["Brands", `${site.brandNames.join(", ")} and more`],
+    ["Payment", "Visa and Mastercard"],
+    ["Nearby areas", site.areas.join(", ")],
+  ];
+  return `<section class="section facts" aria-labelledby="facts-h">
+  <div class="wrap narrow reveal">
+    <h2 id="facts-h">A2U at a glance</h2>
+    <dl>${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+  </div>
+</section>`;
+}
+
+const trustItems = [
+  ["tag", "Up to 70% off RRP", "on selected graded stock*"],
+  ["truck", "New stock weekly", "fresh deliveries all the time"],
+  ["clock", "Open 7 days", "late opening weekdays"],
+  ["shield", "Top brands", "Samsung, Bosch, Beko & more"],
+];
 
 export function homePage(images) {
   const cards = categories
     .map(
-      (c) => `<li class="card">
+      (c, i) => `<li class="card reveal" style="--i:${i}">
         <a href="/${c.slug}/">
-          ${img(images, c.hero, `${c.nav} for sale at Appliances 2 U, Bootle`, { sizes: "(min-width: 900px) 20vw, (min-width: 600px) 50vw, 100vw" })}
-          <span class="card-body"><strong>${c.nav}</strong><span>View the range →</span></span>
+          ${img(images, c.hero, `${c.nav} for sale at Appliances 2 U, Bootle`, { sizes: "(min-width: 1000px) 20vw, (min-width: 600px) 33vw, 50vw" })}
+          <span class="card-body"><span class="card-ico">${icon(c.icon, 22)}</span><strong>${c.nav}</strong><span class="card-link">View range ${icon("arrow", 16)}</span></span>
         </a>
       </li>`,
     )
     .join("");
-  const brands = site.brands
+  const logos = site.brands
     .map((b) => `<li>${img(images, `brands/${b}`, `${b[0].toUpperCase()}${b.slice(1)}`, { sizes: "160px" })}</li>`)
-    .join("");
+    .join("")
+    // Marquee items start off-screen, where lazy images never load.
+    .replace(/ loading="lazy"/g, "");
+  const steps = [
+    ["Same appliance", "Graded stock is usually new or ex-display. Inside, it is the same machine you would buy on the high street."],
+    ["Cosmetic marks only", "A small dent or scratch, often on a side that ends up hidden between units or against a wall."],
+    ["Much lower price", "Because it cannot be sold as perfect, you pay far less for the same performance."],
+  ];
 
   const body = `
 <section class="hero">
   <div class="wrap hero-grid">
-    <div>
-      <p class="eyebrow">Bootle · Liverpool · Merseyside</p>
-      <h1>New &amp; Graded Appliances in Liverpool at Unbeatable Prices</h1>
-      <p class="lead">Washing machines, tumble dryers, fridge freezers, cookers and integrated appliances from top brands. Visit our showroom at ${esc(site.address.street)}, Bootle.</p>
-      <p class="actions">
-        <a class="btn btn-call" href="tel:${site.phones[0].e164}">Call ${site.phones[0].display}</a>
-        <a class="btn btn-ghost" href="#range">Browse the range</a>
-      </p>
-      <ul class="usp">
-        <li>New stock arriving every week</li>
-        <li>Up to 70% off RRP on selected graded appliances*</li>
-        <li>Open 7 days a week</li>
-      </ul>
+    <div class="hero-copy">
+      <p class="eyebrow">${icon("pin", 16)}Strand Road · Bootle · Liverpool</p>
+      <h1><span class="display">Big brands.<br><em>Small prices.</em></span> New &amp; graded appliances in Liverpool</h1>
+      <p class="lead">Washing machines, tumble dryers, fridge freezers, cookers and integrated appliances from top brands, for a lot less than the high street.</p>
+      <p class="actions">${callBtn()}<a class="btn btn-outline-light" href="#range">Browse the range</a></p>
     </div>
     <div class="hero-media">
       ${img(images, "site/shop-front-bootle", "Appliances 2 U shop front on Strand Road, Bootle", { eager: true, sizes: "(min-width: 900px) 40vw, 100vw" })}
+      <p class="sticker" aria-hidden="true"><span>Up to</span><strong>70%</strong><span>off RRP*</span></p>
     </div>
   </div>
+</section>
+
+<section class="trust" aria-label="Why shop with us">
+  <ul class="wrap trust-grid">${trustItems
+    .map(([ic, t, s]) => `<li>${icon(ic, 26)}<span><strong>${t}</strong><small>${s}</small></span></li>`)
+    .join("")}</ul>
 </section>
 
 <section class="section" id="range">
   <div class="wrap">
+    <p class="kicker">Shop by category</p>
     <h2>Our range</h2>
-    <p class="section-lead">Quality new and graded home appliances to suit every kitchen and budget.</p>
+    <p class="section-lead">Quality new and graded home appliances to suit every kitchen and budget. Stock changes weekly.</p>
     <ul class="cards">${cards}</ul>
   </div>
 </section>
 
-<section class="section alt">
-  <div class="wrap split">
-    <div>
-      <h2>Your local appliance store in Bootle</h2>
-      <p>At ${esc(site.legalName)} we are proud to be a trusted local supplier of high-quality appliances at prices that are hard to beat. With years of experience, we have built our reputation on friendly service and a wide range of products for every home and budget.</p>
-      <p>From kitchen essentials to premium appliances, we make buying easy, affordable and hassle-free. Based in the heart of Bootle, we are committed to serving Liverpool and the wider Merseyside community with reliability and value you can count on.</p>
-      <p><a class="btn btn-ghost" href="/about/">More about us</a></p>
-    </div>
-    ${img(images, "site/van-bootle", "Appliances 2 U van in Bootle, Liverpool", { sizes: "(min-width: 900px) 45vw, 100vw", cls: "rounded" })}
-  </div>
-</section>
-
-<section class="section brands">
+<section class="section graded-band">
   <div class="wrap">
-    <h2>Brands we stock</h2>
-    <ul class="brand-logos">${brands}</ul>
-    <p class="muted">Including ${site.brandNames.join(", ")} and more, subject to availability.</p>
+    <p class="kicker">Why it's cheaper</p>
+    <h2>What “graded” means for you</h2>
+    <ol class="steps">${steps.map(([t, d], i) => `<li class="reveal" style="--i:${i}"><span class="step-n">${i + 1}</span><h3>${t}</h3><p>${d}</p></li>`).join("")}</ol>
+    <p><a class="btn btn-ghost" href="/${gradedGuide.slug}/">Read the graded appliance guide ${icon("arrow", 16)}</a></p>
   </div>
 </section>
 
+<section class="section">
+  <div class="wrap split">
+    <div class="reveal">
+      <p class="kicker">Local &amp; independent</p>
+      <h2>Your local appliance store in Bootle</h2>
+      <p>At ${esc(site.legalName)} we are proud to be a trusted local supplier of high-quality appliances at prices that are hard to beat. We have built our reputation on friendly service and a wide range of products for every home and budget.</p>
+      <p>From kitchen essentials to premium appliances, we make buying easy, affordable and hassle-free, serving Bootle, Liverpool and the wider Merseyside community.</p>
+      <p class="actions"><a class="btn btn-ghost" href="/about/">More about us</a></p>
+    </div>
+    ${img(images, "site/van-bootle", "Appliances 2 U van in Bootle, Liverpool", { sizes: "(min-width: 900px) 45vw, 100vw", cls: "rounded reveal" })}
+  </div>
+</section>
+
+<section class="brands" aria-labelledby="brands-h">
+  <div class="wrap">
+    <h2 id="brands-h" class="kicker">Brands we stock</h2>
+  </div>
+  <div class="marquee"><ul class="brand-logos">${logos}${logos.replace(/<li>/g, '<li aria-hidden="true">')}</ul></div>
+  <p class="wrap muted center">Including ${site.brandNames.join(", ")} and more, subject to availability.</p>
+</section>
+
+${quickFacts()}
 ${faqBlock()}
 ${callStrip()}
-<p class="wrap muted small">*Selected graded appliances only. Terms and conditions apply; please ask in store.</p>`;
+<p class="wrap muted small footnote">*Selected graded appliances only. Terms and conditions apply; please ask in store.</p>`;
 
   return layout({
     path: "/",
@@ -79,46 +126,73 @@ ${callStrip()}
     description:
       "Liverpool's local store for new and graded washing machines, fridge freezers, cookers and tumble dryers at low prices. Visit us at 203 Strand Road, Bootle L20 3HJ.",
     body,
-    ld: [localBusinessLd(), faqLd(), { "@context": "https://schema.org", "@type": "WebSite", name: site.name, url: `${site.url}/` }],
+    ld: [
+      localBusinessLd(),
+      faqLd(),
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${site.url}/#website`,
+        name: site.name,
+        alternateName: site.shortName,
+        url: `${site.url}/`,
+        inLanguage: "en-GB",
+        publisher: { "@id": `${site.url}/#store` },
+      },
+    ],
   });
 }
 
 export function categoryPage(c, images) {
   const gallery = images.galleries[c.gallery];
   const trail = [home, { name: c.nav, path: `/${c.slug}/` }];
+  const single = c.nav.replace(/s$/, "");
   const figures = gallery
     .map((g, i) => {
       const stem = g.src.replace(/^assets\/img\//, "").replace(/\.webp$/, "");
-      const alt = `${c.nav.replace(/s$/, "")} in stock at Appliances 2 U Bootle – photo ${i + 1}`;
-      return `<li><a href="/${g.src}" class="zoom">${img(images, stem, alt, { sizes: "(min-width: 900px) 25vw, 50vw" })}</a></li>`;
+      return `<li><a href="/${g.src}" class="zoom">${img(images, stem, `${single} in stock at Appliances 2 U Bootle – photo ${i + 1}`, { sizes: "(min-width: 900px) 25vw, 50vw" })}</a></li>`;
     })
     .join("");
   const others = categories
     .filter((o) => o.slug !== c.slug)
-    .map((o) => `<li><a href="/${o.slug}/">${o.nav}</a></li>`)
+    .map((o) => `<li><a href="/${o.slug}/">${icon(o.icon, 18)}${o.nav}</a></li>`)
     .join("");
+  const allFaqs = [...c.faqs, faqs[0]];
 
   const body = `
-${crumbs(trail)}
-<section class="page-head">
-  <div class="wrap narrow">
-    <h1>${c.h1}</h1>
-    ${c.intro.map((p) => `<p>${p}</p>`).join("\n    ")}
-    <p class="actions"><a class="btn btn-call" href="tel:${site.phones[0].e164}">Call ${site.phones[0].display} to check stock</a></p>
+<section class="page-hero">
+  ${crumbs(trail)}
+  <div class="wrap page-hero-grid">
+    <div>
+      <span class="page-ico">${icon(c.icon, 34)}</span>
+      <h1>${c.h1}</h1>
+      ${c.intro.map((p) => `<p>${p}</p>`).join("\n      ")}
+      <p class="actions">${callBtn(`Call ${site.phones[0].display} to check stock`)}</p>
+    </div>
+    ${img(images, c.hero, `${c.nav} at Appliances 2 U, Bootle`, { eager: true, sizes: "(min-width: 900px) 35vw, 100vw", cls: "page-hero-img" })}
+  </div>
+</section>
+<section class="section tips">
+  <div class="wrap">
+    <p class="kicker">Buying tips</p>
+    <h2>Choosing a ${c.item}</h2>
+    <ul class="tip-grid">${c.guide.map(([t, d], i) => `<li class="reveal" style="--i:${i}"><h3>${t}</h3><p>${d}</p></li>`).join("")}</ul>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
-    <h2>Recent stock</h2>
+    <p class="kicker">In store</p>
+    <h2>Recent ${c.nav.toLowerCase()} stock</h2>
     <p class="section-lead">A selection of ${c.item}s we have had in store. Stock changes regularly, so call for the latest availability and prices.</p>
     <ul class="gallery">${figures}</ul>
   </div>
 </section>
+${faqBlock(allFaqs, `${c.nav}: common questions`)}
 ${callStrip(`Looking for a ${c.item}?`)}
 <section class="section">
   <div class="wrap">
     <h2>Explore more appliances</h2>
-    <ul class="pill-links">${others}</ul>
+    <ul class="pill-links">${others}<li><a href="/${gradedGuide.slug}/">${icon("tag", 18)}What is graded?</a></li></ul>
   </div>
 </section>`;
 
@@ -126,7 +200,6 @@ ${callStrip(`Looking for a ${c.item}?`)}
     path: `/${c.slug}/`,
     title: c.title,
     description: c.description,
-    ogImage: `assets/img/${c.hero}.webp`,
     body,
     breadcrumb: trail,
     ld: [
@@ -136,9 +209,62 @@ ${callStrip(`Looking for a ${c.item}?`)}
         name: c.h1,
         description: c.description,
         url: `${site.url}/${c.slug}/`,
+        inLanguage: "en-GB",
+        isPartOf: { "@id": `${site.url}/#website` },
         about: { "@id": `${site.url}/#store` },
         primaryImageOfPage: `${site.url}/assets/img/${c.hero}.webp`,
+        image: gallery.map((g) => `${site.url}/${g.src}`),
       },
+      faqLd(allFaqs),
+    ],
+  });
+}
+
+export function gradedPage(images) {
+  const g = gradedGuide;
+  const trail = [home, { name: g.nav, path: `/${g.slug}/` }];
+  const guideFaqs = [faqs[0], ...categories.map((c) => c.faqs[1]).filter((f) => /graded|reliable/i.test(f.q))];
+  const body = `
+<section class="page-hero">
+  ${crumbs(trail)}
+  <div class="wrap narrow">
+    <p class="kicker">Buyer's guide</p>
+    <h1>${g.h1}</h1>
+    <p class="lead">Save money on big-brand appliances without buying second-hand. Here is what graded really means and what to check.</p>
+  </div>
+</section>
+<article class="section prose">
+  <div class="wrap narrow">
+    ${g.sections.map(([h, p]) => `<h2>${h}</h2>\n    <p>${p}</p>`).join("\n    ")}
+    <figure>${img(images, "site/shop-front-bootle", "Graded appliances on sale at Appliances 2 U, Bootle", { sizes: "(min-width: 800px) 760px, 100vw", cls: "rounded" })}
+      <figcaption>Our showroom at ${esc(fullAddress())}.</figcaption></figure>
+    <h2>Shop graded appliances in Liverpool</h2>
+    <ul class="pill-links">${categories.map((c) => `<li><a href="/${c.slug}/">${icon(c.icon, 18)}${c.nav}</a></li>`).join("")}</ul>
+  </div>
+</article>
+${faqBlock(guideFaqs)}
+${callStrip("Want to see graded stock in person?")}`;
+  return layout({
+    path: `/${g.slug}/`,
+    title: g.title,
+    description: g.description,
+    body,
+    breadcrumb: trail,
+    ld: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: g.h1,
+        description: g.description,
+        inLanguage: "en-GB",
+        mainEntityOfPage: `${site.url}/${g.slug}/`,
+        image: `${site.url}/assets/img/site/og-card.jpg`,
+        author: { "@id": `${site.url}/#store` },
+        publisher: { "@id": `${site.url}/#store` },
+        datePublished: "2026-10-02",
+        dateModified: new Date().toISOString().slice(0, 10),
+      },
+      faqLd(guideFaqs),
     ],
   });
 }
@@ -146,15 +272,14 @@ ${callStrip(`Looking for a ${c.item}?`)}
 export function aboutPage(images) {
   const trail = [home, { name: "About", path: "/about/" }];
   const body = `
-${crumbs(trail)}
-<section class="page-head">
+<section class="page-hero">
+  ${crumbs(trail)}
   <div class="wrap split">
     <div>
+      <p class="kicker">About A2U</p>
       <h1>About Appliances 2 U</h1>
       <p>${esc(site.name)} (A2U) is your go-to destination in Bootle, Liverpool for high-quality new, nearly new and graded appliances for the home.</p>
       <p>We offer a wide range of appliances, from fridge freezers to washing machines, all at affordable prices. Our team is dedicated to friendly, honest service and to helping you find the right appliance for your needs and your budget.</p>
-      <p>Discover the A2U difference and bring home reliable appliances that fit your lifestyle.</p>
-      <h2>Why shop with us?</h2>
       <ul class="ticks">
         <li>New and graded stock from leading brands</li>
         <li>Prices well below the high street</li>
@@ -162,9 +287,10 @@ ${crumbs(trail)}
         <li>Local, independent and open 7 days a week</li>
       </ul>
     </div>
-    ${img(images, "site/shop-front-bootle", "Appliances 2 U shop front, 203 Strand Road, Bootle", { sizes: "(min-width: 900px) 40vw, 100vw", cls: "rounded" })}
+    ${img(images, "site/shop-front-bootle", "Appliances 2 U shop front, 203 Strand Road, Bootle", { eager: true, sizes: "(min-width: 900px) 40vw, 100vw", cls: "rounded" })}
   </div>
 </section>
+${quickFacts()}
 ${callStrip("Talk to our team")}`;
   return layout({
     path: "/about/",
@@ -173,7 +299,7 @@ ${callStrip("Talk to our team")}`;
       "Appliances 2 U (A2U) is an independent Bootle store selling high-quality new, nearly new and graded home appliances at affordable prices across Liverpool.",
     body,
     breadcrumb: trail,
-    ld: [localBusinessLd()],
+    ld: [localBusinessLd(), { "@context": "https://schema.org", "@type": "AboutPage", url: `${site.url}/about/`, about: { "@id": `${site.url}/#store` } }],
   });
 }
 
@@ -181,9 +307,10 @@ export function contactPage() {
   const trail = [home, { name: "Contact", path: "/contact/" }];
   const hours = site.hours.map((h) => `<li><span>${h.label}</span><span>${h.text}</span></li>`).join("");
   const body = `
-${crumbs(trail)}
-<section class="page-head">
+<section class="page-hero">
+  ${crumbs(trail)}
   <div class="wrap narrow">
+    <p class="kicker">Get in touch</p>
     <h1>Contact Appliances 2 U</h1>
     <p>Have a question or want to check stock? Give us a call or visit the showroom. We are happy to help.</p>
   </div>
@@ -197,6 +324,8 @@ ${crumbs(trail)}
       <ul class="hours">${hours}</ul>
       <h2>Address</h2>
       <address>${site.legalName}<br>${esc(fullAddress())}</address>
+      <h2>Finding us</h2>
+      <p>On Strand Road in Bootle, easy to reach from ${site.areas.slice(1, -1).join(", ")} and ${site.areas.at(-1)}.</p>
     </div>
     ${mapBlock()}
   </div>
@@ -208,22 +337,22 @@ ${crumbs(trail)}
       "Contact Appliances 2 U in Bootle, Liverpool. Call 07769 865432 or 07752 241831, or visit us at 203 Strand Road, L20 3HJ. Open 7 days a week.",
     body,
     breadcrumb: trail,
-    ld: [localBusinessLd()],
+    ld: [localBusinessLd(), { "@context": "https://schema.org", "@type": "ContactPage", url: `${site.url}/contact/`, about: { "@id": `${site.url}/#store` } }],
   });
 }
 
 export function notFoundPage() {
-  const links = categories.map((c) => `<li><a href="/${c.slug}/">${c.nav}</a></li>`).join("");
+  const links = categories.map((c) => `<li><a href="/${c.slug}/">${icon(c.icon, 18)}${c.nav}</a></li>`).join("");
   return layout({
     path: "/404.html",
     title: "Page not found | Appliances 2 U",
     description: "Sorry, we couldn't find that page.",
-    body: `<section class="page-head"><div class="wrap narrow">
+    body: `<section class="page-hero"><div class="wrap narrow">
   <h1>Page not found</h1>
   <p>Sorry, that page has moved or no longer exists. Try one of these instead:</p>
   <ul class="pill-links">${links}<li><a href="/">Home</a></li></ul>
 </div></section>`,
-  }).replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">');
+  }).replace(/<meta name="robots" content="[^"]*">/, '<meta name="robots" content="noindex">');
 }
 
 // Old Wix URLs → new pages. GitHub Pages has no server-side 301s; an instant
@@ -240,3 +369,5 @@ export function redirectPage(to) {
 </head><body><p>This page has moved to <a href="${to}">${url}</a>.</p></body></html>
 `;
 }
+
+export { directionsUrl };

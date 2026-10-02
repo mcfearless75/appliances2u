@@ -25,6 +25,9 @@ To add gallery photos, either drop WebP files into `src/assets/img/<category>/` 
 - JSON-LD: `HomeGoodsStore` (address, phones, opening hours), `FAQPage`, `BreadcrumbList`, `CollectionPage`
 - `sitemap.xml`, `robots.txt`, custom `404.html`
 - WebP images with explicit width/height, responsive `srcset`, lazy loading. No JS framework, so pages load fast.
+- Local SEO: geo coordinates, `hasMap`, areas served, offer catalogue, brands, opening hours in JSON-LD; geo meta tags; consistent name/address/phone on every page
+- AI search / GEO: `llms.txt` + `llms-full.txt`, robots.txt explicitly allows AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…), a quotable "A2U at a glance" fact sheet, question-led FAQs per category, and a graded-appliances guide (Article schema)
+- Image sitemap entries for every product photo; 1200×630 social share card (`tools/og_card.py`)
 - Old Wix URLs keep working: `/washing-machines`, `/tumble-dryers`, `/integrated`, `/about`, `/contact` are unchanged; `/copy-of-washing-machines` redirects to `/cookers/` and `/fridge-freeze` to `/fridge-freezers/`
 
 ## Deploying (GitHub Pages)
