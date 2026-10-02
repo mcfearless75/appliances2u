@@ -8,6 +8,19 @@ import { homePage, categoryPage, aboutPage, contactPage, notFoundPage, redirectP
 const root = dirname(fileURLToPath(import.meta.url));
 const src = join(root, "src");
 const out = join(root, "dist");
+// Set BASE_PATH=appliances2u to preview at <user>.github.io/appliances2u/ before the domain moves.
+// (No leading slash: Git Bash on Windows rewrites "/x" env values into file paths.)
+const basePath = (process.env.BASE_PATH || "").replace(/^\/+|\/+$/g, "");
+const BASE = basePath ? `/${basePath}` : "";
+
+const rebase = (html) =>
+  !BASE
+    ? html
+    : html
+        .replace(/(href|src|srcset)="\/(?!\/)/g, `$1="${BASE}/`)
+        .replace(/, \/assets\//g, `, ${BASE}/assets/`)
+        .replace(/url=\//g, `url=${BASE}/`)
+        .replace(/location\.replace\("\//g, `location.replace("${BASE}/`);
 
 function loadImages() {
   const manifest = JSON.parse(readFileSync(join(src, "data", "images.json"), "utf8"));
@@ -25,7 +38,7 @@ function loadImages() {
 function write(path, content) {
   const file = join(out, path);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, content);
+  writeFileSync(file, path.endsWith(".html") ? rebase(content) : content);
 }
 
 const images = loadImages();
@@ -58,7 +71,7 @@ ${pages.map(([p]) => `  <url><loc>${site.url}${p}</loc><lastmod>${today}</lastmo
 `,
 );
 write("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
-write("CNAME", `${new URL(site.url).host}\n`);
+if (!BASE) write("CNAME", `${new URL(site.url).host}\n`);
 write(".nojekyll", "");
 write(
   "site.webmanifest",
@@ -66,13 +79,13 @@ write(
     {
       name: site.name,
       short_name: site.shortName,
-      start_url: "/",
+      start_url: `${BASE}/`,
       display: "browser",
       theme_color: "#1b1f8a",
       background_color: "#ffffff",
       icons: [
-        { src: "/assets/img/brand/icon-192.png", sizes: "192x192", type: "image/png" },
-        { src: "/assets/img/brand/icon-512.png", sizes: "512x512", type: "image/png" },
+        { src: `${BASE}/assets/img/brand/icon-192.png`, sizes: "192x192", type: "image/png" },
+        { src: `${BASE}/assets/img/brand/icon-512.png`, sizes: "512x512", type: "image/png" },
       ],
     },
     null,
